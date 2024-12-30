@@ -386,7 +386,6 @@ pub fn convert_18_to_15(id: String) -> String? {
     if id.length() != CHINA_ID_MAX_LENGTH || is_valid_18_card(id)==false {
         return None
     }
-    
     // 截取前6位 + 截取后8位(去掉年份前缀和最后一位校验码)
     Some(
         id.substring(start=0, end=6) + 

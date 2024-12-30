@@ -1,6 +1,7 @@
 {
   "is-main": true,
   "import": [
-    "kesmeey/tools/lib"
+    
+    { "path": "kesmeey/tools/lib", "alias": "tools" }
   ]
 }
