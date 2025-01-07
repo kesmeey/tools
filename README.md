@@ -2,6 +2,8 @@
 
 该库是模仿 Java 的[hutool](https://github.com/dromara/hutool)工具库进行编写，编写一些实用的工具库（判断身份证是否合法，手机号是否合法等）
 
+同时该库的部分函数使用到了[正则表达式库](https://mooncakes.io/docs/#/yj-qin/regexp/)，因此使用该库需要先下载该库（ moon add yj-qin/regexp )
+
 检测18位身份证是否合法
 
 ```
@@ -185,6 +187,22 @@ fn main {
 //脱敏后的IPv6地址为：2001:*:*:*:*:*:*:*
 //脱敏后的字符串为：1********
 //清空后的字符串为：
+```
+
+验证车牌号是否有效(支持电动车和非电动车车牌)
+
+```
+
+fn main {
+  let car_license_valid = @tools.is_valid_car_license("京A12345".to_string())
+  let electric_car_license_valid = @tools.is_valid_car_license("沪BD67890")
+  println(car_license_valid)// true
+  println(electric_car_license_valid)     // true
+  let car_license_invalid = @tools.is_valid_car_license("京12345")
+  println(car_license_invalid) // false
+}
+
+
 ```
 
 

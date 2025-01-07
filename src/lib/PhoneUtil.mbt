@@ -25,6 +25,7 @@ pub fn is_mobile_cn(phone : String) -> Bool {
   let result = re.success()
   result
 }
+
 // 验证香港手机号
 ///|
 pub fn is_mobile_hk(phone : String) -> Bool {
@@ -93,6 +94,9 @@ pub fn hide_after(phone : String) -> String {
 
 ///|
 pub fn sub_before(phone : String) -> String {
+  if phone.length() < 3 {
+    return ""
+  }
   phone.substring(start=0, end=3)
 }
 
@@ -100,10 +104,17 @@ pub fn sub_before(phone : String) -> String {
 
 ///|
 pub fn sub_between(phone : String) -> String {
+  if phone.length() < 7 {
+    return ""
+  }
   phone.substring(start=3, end=7)
 }
+
 // 获取手机号后4位
 ///|
 pub fn sub_after(phone : String) -> String {
+  if phone.length() < 11 {
+    return ""
+  }
   phone.substring(start=7, end=11)
 }

@@ -98,3 +98,45 @@ pub fn is_valid_email(email : String) -> Bool {
   let result = re.success()
   result
 }
+
+///|
+pub fn is_valid_car_license(plate : String) -> Bool {
+  let plate = plate.to_upper()
+  if plate.length() != 7 && plate.length() != 8 {
+    return false
+  }
+
+  // 验证第一位是否为省份简称首字
+  let first_char = plate[0]
+  let valid_provinces = "京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼"
+  if valid_provinces.contains(first_char.to_string()) == false {
+    return false
+  }
+
+  // 验证第二位是否为字母
+  let second_char = plate[1]
+  if (second_char >= 'A' && second_char <= 'Z') == false {
+    return false
+  }
+
+  // 验证第三位
+  let third_char = plate[2]
+  if third_char == 'D' || third_char == 'F' {
+    // 新能源车牌，检查后四位是否为字母或数字
+    for i = 3; i < 8; i = i + 1 {
+      let c = plate[i]
+      if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z')) == false {
+        return false
+      }
+    }
+  } else {
+    // 普通车牌，检查后五位是否为字母或数字
+    for i = 2; i < 7; i = i + 1 {
+      let c = plate[i]
+      if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z')) == false {
+        return false
+      }
+    }
+  }
+  true
+}
