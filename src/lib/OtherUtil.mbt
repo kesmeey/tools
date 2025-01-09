@@ -7,8 +7,8 @@ const CREDIT_CODE_PATTERN = "^[0-9A-HJ-NPQRTUWXY]{2}\\d{6}[0-9A-HJ-NPQRTUWXY]{10
 
 ///|
 const EMAIL_PATTERN = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$"
-// 简单校验统一社会信用代码格式
 
+// 简单校验统一社会信用代码格式
 ///|
 pub fn is_credit_code_simple(code : String) -> Bool {
   if code.length() != 18 {
