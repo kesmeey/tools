@@ -71,6 +71,25 @@ fn main {
 ///输出IdCard{provinceCode='21', cityCode='2102', birthDate=2001-7-28, gender=1, age=23}
 ```
 
+计算器函数
+
+```
+fn main {
+  let s1 = "3/3 "
+  let s2 = "3 + 3 * 3"
+  let s3 = "3-(1+5)+3^3"
+  let mut ans = @tools.calculate(s1)
+  println(ans)// 1
+  ans = @tools.calculate(s2)
+  println(ans)// 12
+  ans = @tools.calculate(s3)
+  println(ans)// 24
+}
+
+```
+
+
+
 检测社会信用卡是否合法
 
 ```
