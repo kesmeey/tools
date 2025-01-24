@@ -97,3 +97,37 @@ pub fn calculate(expr : String) -> Int {
     0
   }
 }
+// 排列组合部分
+fn factorial(n: Int) -> Int {
+    if n <= 1 { 1 } else { n * factorial(n - 1) }
+}
+
+fn factorial_range(n: Int, m: Int) -> Int {
+    let mut result = 1
+    for i = m + 1; i <= n; i = i + 1 {
+        result = result * i
+    }
+    result
+}
+
+// 计算排列数
+pub fn arrangement_count(n: Int, m: Int) -> Int {
+    if n == m {
+        factorial(n)
+    } else if n > m {
+        factorial_range(n, n - m)
+    } else {
+        0
+    }
+}
+
+// 计算组合数
+pub fn combination_count(n: Int, m: Int) -> Int {
+    if m == 0 || n == m {
+        1
+    } else if n > m {
+        factorial_range(n, n - m) / factorial(m)
+    } else {
+        0
+    }
+}

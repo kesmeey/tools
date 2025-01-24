@@ -1,6 +1,6 @@
 # tools
 
-该库是模仿 Java 的[hutool](https://github.com/dromara/hutool)工具库进行编写，编写一些实用的工具库（判断身份证是否合法，手机号是否合法等）
+该库是模仿 Java 的[hutool](https://github.com/dromara/hutool)工具库进行编写，编写一些实用的，偏向业务的工具库（判断身份证是否合法，手机号是否合法等）
 
 同时该库的部分函数使用到了[正则表达式库](https://mooncakes.io/docs/#/yj-qin/regexp/)，因此使用该库需要先下载该库（ moon add yj-qin/regexp )
 
@@ -84,6 +84,22 @@ fn main {
   println(ans)// 12
   ans = @tools.calculate(s3)
   println(ans)// 24
+}
+
+```
+
+排列组合函数
+
+```
+fn main {
+   let test1 = @tools.arrangement_count(4, 2)
+   println(test1)//A(4,2) = 12
+    let test2 = @tools.arrangement_count(3, 3)
+    println(test2)//A(3,3) = 6
+    let test3 = @tools.combination_count(4, 2)
+    println(test3)//C(4,2) = 6
+    let test4 = @tools.combination_count(3, 3)
+    println(test4)//C(3,3) = 1 
 }
 
 ```
@@ -225,4 +241,37 @@ fn main {
 ```
 
 
+
+检测字符串是否为存英文，纯数字
+
+```
+fn main {
+  let test1 = @tools.is_number("bbb")
+  println(test1) // false
+  let test2 = @tools.is_number("114514")
+  println(test2)  // true
+  let test3 = @tools.is_chinese("中文")
+  println(test3)  // true
+  let test4 = @tools.is_chinese("中文123")
+  println(test4)  // false
+}
+
+```
+
+检测文件路径是否合法
+
+```
+fn main {
+  let test1 = @tools.is_windows_path("C:\\Windows\\System32")
+  println(test1) // true
+  let test2 = @tools.is_windows_path("1:/Documents/test.txt")
+  println(test2) // false
+  let test3 = @tools.is_linux_path("/usr/local/bin")
+  println(test3) // true
+  let test4 = @tools.is_linux_path("/test//file")
+  println(test4) // false 
+}
+
+
+```
 
