@@ -10,6 +10,59 @@ const EMAIL_PATTERN = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9
 
 // 简单校验统一社会信用代码格式
 ///|
+/// 
+/// 
+/// 
+// ...existing code...
+
+///| 增值税普通、专用发票代码、货物运输业增值税专用发票
+const VAT_CODE_10 = "^\\d{8}[2-9][0-4]$"
+
+///| 增值税电子普通、普通（卷票）、区块链电子发票
+const VAT_CODE_12 = "^[01]\\d{11}$"
+
+///| 工商注册码
+const BUSINESS_REGISTRATION_NO = "^\\d{15}$"
+
+///| 法人和其他组织统一社会信用代码
+const UNIFIED_SOCIAL_CREDIT_CODE = "^[0-9A-HJ-NP-RTUW-Y]{2}\\d{6}[0-9A-HJ-NP-RTUW-Y]{10}$"
+
+///| 中国大陆护照，不包含特区护照（港澳特区护照）
+// 因私电子护照新字段2017.04启动，第二位使用字母，排除IO
+// 因公电子护照2012开始启用
+const CHINESE_PASSPORT = "^(?:G\\d{8}|[DSP]E?\\d{7}|E[0-9A-HJ-NP-Z]\\d{7})$"
+
+///| 通用护照标准，按国际民航组织9303约定，最大不能超过9位
+const GENERAL_PASSPORT = "^[0-9A-Za-z]{5,9}$"
+
+///| 纳税人识别号
+// 组织结构是15位，法人是20位
+// 三证合一后的社会统一验证代码也是纳税人识别号
+// 自然人是18位，对于一代身份证不清楚是否和法人一样补全3位0
+// 其它证件（15位）无法获取校验位计算规则
+const TAXPAYER_ID = "^[0-9A-HJ-NP-RTUW-Y]{15,20}$"
+
+///|
+pub fn char_to_lower(c : Char) -> Char {
+  if 'A' <= c && c <= 'Z' {
+    Char::from_int(c.to_int() + 'a'.to_int() - 'A'.to_int())
+  } else {
+    c
+  }
+}
+
+///| 
+// 将字符转换为大写
+pub fn char_to_upper(c : Char) -> Char {
+  if c >= 'a' && c <= 'z' {
+    let code = c.to_int()
+    Char::from_int(code - 32)
+  } else {
+    c
+  }
+}
+
+///|
 pub fn is_credit_code_simple(code : String) -> Bool {
   if code.length() != 18 {
     return false
@@ -97,6 +150,68 @@ pub fn is_valid_email(email : String) -> Bool {
   let re = @regexp.compile?(EMAIL_PATTERN).unwrap().matches(email)
   let result = re.success()
   result
+}
+
+// ...existing code...
+
+///| 验证增值税普通、专用发票代码、货物运输业增值税专用发票
+pub fn is_valid_vat_code_10(code : String) -> Bool {
+  if code.length() != 10 {
+    return false
+  }
+  let re = @regexp.compile?(VAT_CODE_10).unwrap().matches(code)
+  re.success()
+}
+
+///| 验证增值税电子普通、普通（卷票）、区块链电子发票
+pub fn is_valid_vat_code_12(code : String) -> Bool {
+  if code.length() != 12 {
+    return false
+  }
+  let re = @regexp.compile?(VAT_CODE_12).unwrap().matches(code)
+  re.success()
+}
+
+///| 验证工商注册码
+pub fn is_valid_business_registration_no(code : String) -> Bool {
+  if code.length() != 15 {
+    return false
+  }
+  let re = @regexp.compile?(BUSINESS_REGISTRATION_NO).unwrap().matches(code)
+  re.success()
+}
+
+///| 验证法人和其他组织统一社会信用代码
+pub fn is_valid_unified_social_credit_code(code : String) -> Bool {
+  if code.length() != 18 {
+    return false
+  }
+  let re = @regexp.compile?(UNIFIED_SOCIAL_CREDIT_CODE).unwrap().matches(code)
+  re.success()
+}
+
+///| 验证中国大陆护照
+pub fn is_valid_chinese_passport(code : String) -> Bool {
+  let re = @regexp.compile?(CHINESE_PASSPORT).unwrap().matches(code)
+  re.success()
+}
+
+///| 验证通用护照
+pub fn is_valid_general_passport(code : String) -> Bool {
+  if code.length() < 5 || code.length() > 9 {
+    return false
+  }
+  let re = @regexp.compile?(GENERAL_PASSPORT).unwrap().matches(code)
+  re.success()
+}
+
+///| 验证纳税人识别号
+pub fn is_valid_taxpayer_id(code : String) -> Bool {
+  if code.length() < 15 || code.length() > 20 {
+    return false
+  }
+  let re = @regexp.compile?(TAXPAYER_ID).unwrap().matches(code)
+  re.success()
 }
 
 ///|

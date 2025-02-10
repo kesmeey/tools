@@ -1,3 +1,4 @@
+///|
 test "is_number" {
   // 测试空字符串
   assert_false!(is_number(""))
@@ -17,6 +18,7 @@ test "is_number" {
   assert_false!(is_number("-12-3"))
 }
 
+///|
 test "is_chinese" {
   // 测试空字符串
   assert_false!(is_chinese(""))
@@ -34,6 +36,7 @@ test "is_chinese" {
   assert_false!(is_chinese("！中文"))
 }
 
+///|
 test "windows_path" {
   assert_true!(is_windows_path("C:\\Windows\\System32"))
   assert_true!(is_windows_path("D:/Documents/test.txt"))
@@ -45,6 +48,7 @@ test "windows_path" {
   assert_false!(is_windows_path("C:\\folder\\file."))
 }
 
+///|
 test "linux_path" {
   assert_true!(is_linux_path("/usr/local/bin"))
   assert_true!(is_linux_path("./config.txt"))
@@ -54,4 +58,22 @@ test "linux_path" {
   assert_false!(is_linux_path("/test//file"))
   assert_false!(is_linux_path("/usr/local/file?"))
   assert_false!(is_linux_path("/home/user/my file"))
+}
+
+///|
+test "naming_case" {
+  // 测试下划线命名
+  assert_eq!(to_underline_case("helloWorld"), "hello_world")
+  assert_eq!(to_underline_case("HelloWorld"), "hello_world")
+  assert_eq!(to_underline_case("hello_world"), "hello_world")
+
+  // 测试连字符命名
+  assert_eq!(to_kebab_case("helloWorld"), "hello-world")
+  assert_eq!(to_kebab_case("HelloWorld"), "hello-world")
+
+  // 测试驼峰命名
+  assert_eq!(to_camel_case("hello_world"), "helloWorld")
+
+  // 测试帕斯卡命名
+  assert_eq!(to_pascal_case("hello_world"), "HelloWorld")
 }

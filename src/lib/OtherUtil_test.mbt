@@ -1,3 +1,4 @@
+///|
 test "car_license_validation" {
   // 有效的普通车牌
   assert_true!(is_valid_car_license("京A12345"))
@@ -30,6 +31,7 @@ test "car_license_validation" {
   assert_false!(is_valid_car_license("1234567")) // 全是数字
 }
 
+///|
 test "email_validation" {
   // 有效的邮箱格式
   assert_true!(is_valid_email("test@example.com"))
@@ -62,6 +64,7 @@ test "email_validation" {
   assert_false!(is_valid_email("test@example.c")) // 顶级域名过短
 }
 
+///|
 test "credit_code_validation" {
   // 有效的统一社会信用代码
   assert_true!(is_credit_code("91630000200896788D")) // 标准格式
@@ -85,4 +88,62 @@ test "credit_code_validation" {
   assert_false!(is_credit_code("91310000MA1K35YO0G")) // 包含O(字母)
   assert_false!(is_credit_code("91310000MA1K35YI0G")) // 包含I(字母)
   assert_false!(is_credit_code("91310000MA1K35Y 0G")) // 包含空格
+}
+// ...existing code...
+
+// ...existing code...
+
+///|
+test "validate_vat_code_10" {
+  assert_eq!(is_valid_vat_code_10("1234567894"), true)
+  assert_eq!(is_valid_vat_code_10("12345678"), false) // 长度不足
+  assert_eq!(is_valid_vat_code_10("1234567895"), false) // 最后一位超出范围
+}
+
+///|
+test "validate_vat_code_12" {
+  assert_eq!(is_valid_vat_code_12("012345678901"), true)
+  assert_eq!(is_valid_vat_code_12("123456789012"), false)
+  assert_eq!(is_valid_vat_code_12("01234567890"), false) // 长度不足
+  assert_eq!(is_valid_vat_code_12("212345678901"), false) // 首位无效
+}
+
+///|
+test "validate_business_registration_no" {
+  assert_eq!(is_valid_business_registration_no("123456789012345"), true)
+  assert_eq!(is_valid_business_registration_no("12345678901234"), false) // 长度不足
+  assert_eq!(is_valid_business_registration_no("12345678901234A"), false) // 包含字母
+}
+
+///|
+test "validate_unified_social_credit_code" {
+  assert_eq!(is_valid_unified_social_credit_code("91110108MA01234567"), true)
+  assert_eq!(is_valid_unified_social_credit_code("9111010MA0123456"), false) // 长度不足
+  assert_eq!(is_valid_unified_social_credit_code("91110108MA0123456I"), false) // 包含无效字符
+}
+
+///|
+test "validate_chinese_passport" {
+  assert_eq!(is_valid_chinese_passport("G12345678"), true)
+  assert_eq!(is_valid_chinese_passport("EA1234567"), true)
+  assert_eq!(is_valid_chinese_passport("P1234567"), true)
+  assert_eq!(is_valid_chinese_passport("12345678"), false) // 无效格式
+  assert_eq!(is_valid_chinese_passport("EI1234567"), false) // 无效字母
+}
+
+///|
+test "validate_general_passport" {
+  assert_eq!(is_valid_general_passport("12345"), true)
+  assert_eq!(is_valid_general_passport("123456789"), true)
+  assert_eq!(is_valid_general_passport("ABCDE"), true)
+  assert_eq!(is_valid_general_passport("1234"), false) // 长度不足
+  assert_eq!(is_valid_general_passport("1234567890"), false) // 长度超出
+}
+
+///|
+test "validate_taxpayer_id" {
+  assert_eq!(is_valid_taxpayer_id("123456789012345"), true)
+  assert_eq!(is_valid_taxpayer_id("12345678901234567890"), true)
+  assert_eq!(is_valid_taxpayer_id("1234567890"), false) // 长度不足
+  assert_eq!(is_valid_taxpayer_id("123456789012345I"), false) // 包含无效字符
 }
