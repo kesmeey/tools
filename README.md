@@ -140,6 +140,29 @@ fn main {
 }
 ```
 
+检验中国护照号码是否合法
+
+```
+
+fn main {
+  print(@tools.is_valid_chinese_passport("G12345678")) //true
+  print(@tools.is_valid_chinese_passport("EA1234567")) //true
+  print(@tools.is_valid_chinese_passport("12345678")) //false
+}
+
+```
+
+验证纳税人识别号是否合法
+
+```
+fn main {
+  print(@tools.is_valid_taxpayer_id("2101060015848291")) //true
+  print(@tools.is_valid_taxpayer_id("123456789012345I")) //false
+  print(@tools.is_valid_taxpayer_id("1234567890")) //false
+}
+
+```
+
 
 
 检测手机号是否合法
@@ -155,6 +178,21 @@ fn main {
 }
 
 ```
+
+检验密码强度
+
+```
+fn main {
+  print(@tools.get_password_strength_text("123456")) //弱密码
+  print(@tools.get_password_strength_text("abc123ABC")) //中等强度密码
+  print(@tools.get_password_strength_text("Abc123ojpj!@#")) //强密码
+}
+
+```
+
+
+
+
 
 脱敏函数（隐藏手机号，姓名等敏感信息）
 
@@ -272,6 +310,32 @@ fn main {
   println(test4) // false 
 }
 
+
+```
+
+将字符串从驼峰命名法改成连接符命名，或者将连接符命名改为驼峰命名法
+
+```
+///|
+fn main {
+  let a = "hello_world"
+  let test1 = @tools.to_camel_case(a)
+  print(test1)//helloWorld
+  let test2 = @tools.to_underline_case(test1)
+  print(test2)//hello_world
+}
+
+```
+
+检测2个字符串的相似度
+
+```
+fn main {
+  print(@tools.similar("hello", "hello")) //完全相同，输出1.0 
+  print(@tools.similar("hello", "helo")) //大部分相同 0.8
+  print(@tools.similar("你好世界", "你好地球")) //一半相同 0.5
+  print(@tools.similar("", "")) //都为空，认为全部相同
+}
 
 ```
 
