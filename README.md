@@ -326,3 +326,31 @@ fn main {
 }
 
 ```
+
+检测字符串是否包含emoj
+
+```
+
+fn main {
+  print(@tools.contains_emoji("aaa")) //flase
+  print(@tools.contains_emoji("❤️大")) //true
+  print(@tools.contains_emoji("☀️")) //true
+
+}
+```
+
+统计字符串a在字符串b出现了多少次
+
+```
+fn main {
+  print(@tools.count_substring("aaa", "aa")) //3
+  print(@tools.count_substring("😊😊😊", "😊")) //3
+  print(@tools.count_substring("hello world", "xyz")) //0
+
+}
+```
+
+
+
+
+

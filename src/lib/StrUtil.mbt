@@ -230,6 +230,113 @@ pub fn to_camel_case_with_symbol(
   result
 }
 
+///| 判断字符串是否包含emoji表情
+pub fn contains_emoji(str : String) -> Bool {
+  if str.length() == 0 {
+    return false
+  }
+  let mut i = 0
+  while i < str.length() {
+    // 获取当前字符的 Unicode 码点
+    let mut code = str[i].to_int()
+
+    // 检查是否在emoji的Unicode范围内
+    if (code >= 0x1F300 && code <= 0x1F9FF) || // 杂项符号及图形
+      (code >= 0x2600 && code <= 0x26FF) || // 杂项符号
+      (code >= 0x2700 && code <= 0x27BF) || // 装饰符号
+      (code >= 0x1F600 && code <= 0x1F64F) || // 表情符号（笑脸等）
+      (code >= 0xFE00 && code <= 0xFE0F) || // 变体选择符
+      (code >= 0x1F000 && code <= 0x1F02F) || // 麻将牌
+      (code >= 0x1F0A0 && code <= 0x1F0FF) || // 扑克牌
+      (code >= 0x1F100 && code <= 0x1F1FF) || // 封闭式字母数字
+      (code >= 0x1F200 && code <= 0x1F2FF) || // 封闭式表意文字
+      (code >= 0x1F300 && code <= 0x1F9FF) { // 其他符号和象形文字
+      return true
+    }
+
+    // 处理 UTF-16 代理对
+    if code >= 0xD800 && code <= 0xDBFF && i + 1 < str.length() {
+      let next_code = str[i + 1].to_int()
+      if next_code >= 0xDC00 && next_code <= 0xDFFF {
+        // 合并代理对以获取实际的码点
+        let high = (code - 0xD800) << 10
+        let low = next_code - 0xDC00
+        code = high + low + 0x10000
+        if code >= 0x1F000 && code <= 0x1F9FF {
+          return true
+        }
+        i = i + 1 // 跳过下一个代理字符
+      }
+    }
+    i = i + 1
+  }
+  false
+}
+
+
+///| 计算子字符串在主字符串中出现的次数（包括重叠部分）
+pub fn count_substring(text : String, sub : String) -> Int {
+  if text.length() == 0 || sub.length() == 0 || text.length() < sub.length() {
+    return 0
+  }
+  let mut count = 0
+  let mut pos = 0
+
+  // 循环查找子串，每次从当前位置的下一个字符开始查找
+  while pos <= text.length() - sub.length() {
+    let found_pos = text.index_of(sub, from=pos)
+    if found_pos == -1 {
+      break
+    }
+    count += 1
+    // 从当前找到位置的下一个位置继续查找，这样可以找到重叠的部分
+    pos = found_pos + 1
+  }
+  count
+}
+
+///|
+test "count_substring" {
+  // 基本测试
+  assert_eq!(count_substring("hello hello hello", "hello"), 3)
+  assert_eq!(count_substring("aaa", "aa"), 2) // aaa 中 aa 出现了2次
+  assert_eq!(count_substring("abc abc abc", "abc"), 3)
+
+  // 边界测试
+  assert_eq!(count_substring("", "test"), 0)
+  assert_eq!(count_substring("test", ""), 0)
+  assert_eq!(count_substring("a", "aa"), 0)
+
+  // 重叠测试
+  assert_eq!(count_substring("aaaa", "aa"), 3) // aaaa 中 aa 出现了3次
+
+  // 特殊字符测试
+  assert_eq!(count_substring("你好你好你好", "你好"), 3)
+  assert_eq!(count_substring("😊😊😊", "😊"), 3)
+
+  // 无匹配测试
+  assert_eq!(count_substring("hello world", "xyz"), 0)
+}
+
+///|
+test "contains_emoji" {
+  // 测试纯文本
+  assert_false!(contains_emoji("Hello World"))
+  assert_false!(contains_emoji("你好世界"))
+  assert_false!(contains_emoji("123456"))
+
+  // 测试含emoji的文本
+  assert_true!(contains_emoji("Hello😊"))
+  assert_true!(contains_emoji("❤️大"))
+  assert_true!(contains_emoji("👨‍👩‍👧‍👦 Family"))
+
+  // 测试特殊情况
+  assert_false!(contains_emoji(""))
+  assert_false!(contains_emoji(" "))
+  assert_true!(contains_emoji("❤️"))
+  assert_true!(contains_emoji("☀️"))
+}
+
 ///|
 ///|
 test "is_number" {
