@@ -1,6 +1,6 @@
 {
   "is_main": false,
   "import": [
-    { "path": "yj-qin/regexp", "alias": "regexp" }
+   
   ]
 }

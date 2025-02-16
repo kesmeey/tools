@@ -2,9 +2,7 @@
 
 该库是模仿 Java 的[hutool](https://github.com/dromara/hutool)工具库进行编写，编写一些实用的，偏向业务的工具库（判断身份证是否合法，手机号是否合法等）
 
-同时该库的部分函数使用到了[正则表达式库](https://mooncakes.io/docs/#/yj-qin/regexp/)，因此使用该库需要先下载该库（ moon add yj-qin/regexp )
-
-检测18位身份证是否合法
+检测 18 位身份证是否合法
 
 ```
 
@@ -26,7 +24,7 @@ fn main {
     println("原始号码: " + id_18)///原始号码: 110105199001011234
     println("隐藏生日: " + @tools.hide_id_card(id_18, 6, 14))///隐藏生日: 110105********1234
     println("隐藏尾号: " + @tools.hide_id_card(id_18, 14, 18))///隐藏尾号: 11010519900101****
-    
+
 }
 ```
 
@@ -48,7 +46,7 @@ fn main {
         }
         None => println("解析身份证信息失败")
     }
-    
+
 }
 
 ```
@@ -66,7 +64,7 @@ fn main {
         }
         None => println("解析身份证信息失败")
     }
-    
+
 }
 ///输出IdCard{provinceCode='21', cityCode='2102', birthDate=2001-7-28, gender=1, age=23}
 ```
@@ -99,12 +97,10 @@ fn main {
     let test3 = @tools.combination_count(4, 2)
     println(test3)//C(4,2) = 6
     let test4 = @tools.combination_count(3, 3)
-    println(test4)//C(3,3) = 1 
+    println(test4)//C(3,3) = 1
 }
 
 ```
-
-
 
 检测社会信用卡是否合法
 
@@ -124,7 +120,7 @@ fn main {
      let valid_code = @tools.random_credit_code()
      println(valid_code)
      println(@tools.is_credit_code(valid_code))// 应输出true
-   
+
 }
 ```
 
@@ -163,8 +159,6 @@ fn main {
 
 ```
 
-
-
 检测手机号是否合法
 
 ```
@@ -189,10 +183,6 @@ fn main {
 }
 
 ```
-
-
-
-
 
 脱敏函数（隐藏手机号，姓名等敏感信息）
 
@@ -278,8 +268,6 @@ fn main {
 
 ```
 
-
-
 检测字符串是否为存英文，纯数字
 
 ```
@@ -307,7 +295,7 @@ fn main {
   let test3 = @tools.is_linux_path("/usr/local/bin")
   println(test3) // true
   let test4 = @tools.is_linux_path("/test//file")
-  println(test4) // false 
+  println(test4) // false
 }
 
 
@@ -327,15 +315,14 @@ fn main {
 
 ```
 
-检测2个字符串的相似度
+检测 2 个字符串的相似度
 
 ```
 fn main {
-  print(@tools.similar("hello", "hello")) //完全相同，输出1.0 
+  print(@tools.similar("hello", "hello")) //完全相同，输出1.0
   print(@tools.similar("hello", "helo")) //大部分相同 0.8
   print(@tools.similar("你好世界", "你好地球")) //一半相同 0.5
   print(@tools.similar("", "")) //都为空，认为全部相同
 }
 
 ```
-
