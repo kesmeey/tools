@@ -301,6 +301,49 @@ fn main {
 
 ```
 
+检测ipv4 ip地址是否合法
+
+```
+fn main {
+  print(@tools.is_valid_ipv4("192.168.1.1.1")) //flase
+  print(@tools.is_valid_ipv4("192.168.0.1")) //true
+  print(@tools.is_valid_ipv4("255.255.255.255")) //true
+}
+```
+
+检查ipv6 ip是否合法
+
+```
+fn main {
+  print(@tools.is_valid_ipv6("2001:0db8:85a3:0000:0000:8a2e:0370:7334")) //true
+  print(@tools.is_valid_ipv6("2001:db8:85a3::8a2e:370:7334")) //true
+  print(@tools.is_valid_ipv6("gggg:0db8:85a3:0000:0000:8a2e:0370:7334")) //false
+}
+  // 测试有效的IPv6地址
+
+```
+
+将long 的数值改为ipv4
+
+```
+fn main {
+  print(@tools.long_to_ipv4(3232235777L)) //"192.168.1.1"
+  print(@tools.long_to_ipv4(0)) //"0.0.0.0"
+  print(@tools.long_to_ipv4(-1)) //负数返回空字符串
+}
+
+```
+
+将ipv4改为long
+
+```
+fn main {
+  print(@tools.ipv4_to_long("192.168.1.1")) //3232235777
+  print(@tools.ipv4_to_long("0.0.0.0")) //0
+  print(@tools.ipv4_to_long("1.1.1")) //不是ip返回-1
+}
+```
+
 将字符串从驼峰命名法改成连接符命名，或者将连接符命名改为驼峰命名法
 
 ```
