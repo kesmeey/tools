@@ -158,14 +158,11 @@ pub fn check_password(passwd : String) -> Int {
   // 检查字典匹配
   for i = 0; i < dictionary.length(); i = i + 1 {
     let dict_word = dictionary[i]
-    if passwd == dict_word || dict_word.index_of(passwd) >= 0 {
-      level -= 1
-      break
-    }
-  }
-  for i = 0; i < dictionary.length(); i = i + 1 {
-    let dict_word = dictionary[i]
-    if passwd == dict_word || dict_word.index_of(passwd) >= 0 {
+    // 修复：原写法 dict_word.index_of(passwd) 是"在词典词里找密码"，
+    // 只有密码恰为词典词的子串时才命中，iloveyou123 / sunshine99 /
+    // 123qwe! 这类"密码里含词典词"的弱密码会全部漏判。
+    // 正确语义是"在密码里找词典词"。
+    if passwd == dict_word || passwd.index_of(dict_word) >= 0 {
       level -= 1
       break
     }
@@ -239,6 +236,8 @@ pub fn get_password_strength_text(passwd : String) -> String {
 ///|
 test "password_strength_text" {
   assert_eq!(get_password_strength_text("123456"), "弱密码")
-  assert_eq!(get_password_strength_text("abc123ABC"), "中等强度密码")
+  // abc123ABC 含最常见弱密码 abc123，词典命中后 level 3 -> 弱密码
+  // （修复词典匹配方向前的期望值是"中等强度密码" level 4）
+  assert_eq!(get_password_strength_text("abc123ABC"), "弱密码")
   assert_eq!(get_password_strength_text("Abc123ojpj!@#"), "强密码")
 }
